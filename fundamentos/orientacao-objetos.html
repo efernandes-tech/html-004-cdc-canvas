@@ -27,6 +27,15 @@
     document.write(meuCarro.cor + ': ' + meuCarro.velocAtual);
     document.write('<hr>');
     document.write(oponente.cor + ': ' + oponente.velocAtual);
+
+    // Outra forma de criar objetos da classe Carro.
+    var outroCarro = {
+        cor: 'azul',
+        velocidade: 0,
+        acelerar: function() {
+            this.velocidade += 10;
+        }
+    }
     </script>
 </body>
 </html>
