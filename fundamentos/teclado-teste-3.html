@@ -5,7 +5,7 @@
 <title>Um herói que atira</title>
 <script src="teclado.js"></script>
 <script src="heroi.js"></script>
-<script src="bola.js"></script>
+<script src="bola2.js"></script>
 <script src="animacao.js"></script>
 </head>
 <body>
@@ -14,17 +14,21 @@
 <script>
 var canvas = document.getElementById('canvas_teclado_3');
 var context = canvas.getContext('2d');
+
 var teclado = new Teclado(document);
 var animacao = new Animacao(context);
-// Um sprite pode ler o teclado para saber
-// como se comportar
-var heroi = new Heroi(context, teclado);
+
+// Um sprite pode ler o teclado para saber como se comportar.
+var heroi = new Heroi(context, teclado, animacao);
 heroi.x = 0;
 heroi.y = 100;
+
 animacao.novoSprite(heroi);
+
 teclado.disparou(ESPACO, function() {
-heroi.atirar();
+    heroi.atirar();
 });
+
 animacao.ligar();
 </script>
 </body>
