@@ -44,6 +44,17 @@ Bola.prototype = {
         ];
     },
     colidiuCom: function(sprite) {
-        alert('PÁ!');
+        // Estou na esquerda
+        if (this.x < sprite.x) {
+            this.velocidadeX = -Math.abs(this.velocidadeX); // -
+        } else {
+            this.velocidadeX = Math.abs(this.velocidadeX); // +
+        }
+        // Estou acima.
+        if (this.y < sprite.y) {
+            this.velocidadeY = -Math.abs(this.velocidadeY); // -
+        } else {
+            this.velocidadeY = Math.abs(this.velocidadeY); // +
+        }
     }
 }
