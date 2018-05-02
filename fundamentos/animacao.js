@@ -1,5 +1,5 @@
 // Arquivo: animacao.js
-function Animacao() {
+function Animacao(context) {
     this.context = context;
     this.sprites = [];
     this.ligado = false;
