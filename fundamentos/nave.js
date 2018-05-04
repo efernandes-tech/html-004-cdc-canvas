@@ -56,6 +56,11 @@ Nave.prototype = {
         return rets;
     },
     colidiuCom: function(outro) {
-        // ...
+        // Se colidiu com um Ovni...
+        if (outro instanceof Ovni) {
+            // Fim de jogo!
+            this.animacao.desligar();
+            alert('GAME OVER');
+        }
     }
 }

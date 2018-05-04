@@ -11,6 +11,10 @@ function Ovni(context, imagem) {
 Ovni.prototype = {
     atualizar: function() {
         this.y += this.velocidade;
+        if (this.y > this.context.canvas.height) {
+            this.animacao.excluirSprite(this);
+            this.colisor.excluirSprite(this);
+        }
     },
     desenhar: function() {
         var ctx = this.context;
@@ -34,6 +38,12 @@ Ovni.prototype = {
         return rets;
     },
     colidiuCom: function(outro) {
-        // ...
+        // Se colidiu com um Tiro, os dois desaparecem.
+        if (outro instanceof Tiro) {
+            this.animacao.excluirSprite(this);
+            this.colisor.excluirSprite(this);
+            this.animacao.excluirSprite(outro);
+            this.colisor.excluirSprite(outro);
+        }
     }
 }
