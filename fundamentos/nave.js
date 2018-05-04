@@ -1,4 +1,5 @@
 // arquivo: nave.js
+
 function Nave(context, teclado, imagem) {
     this.context = context;
     this.teclado = teclado;
@@ -7,6 +8,7 @@ function Nave(context, teclado, imagem) {
     this.y = 0;
     this.velocidade = 0;
 }
+
 Nave.prototype = {
     atualizar: function() {
         if (this.teclado.pressionada(SETA_ESQUERDA)
@@ -29,5 +31,10 @@ Nave.prototype = {
     desenhar: function() {
         this.context.drawImage(this.imagem, this.x, this.y,
             this.imagem.width, this.imagem.height);
+    },
+    // Não esqueça da vírgula no último método quando criar outro
+    atirar: function() {
+        var t = new Tiro(this.context, this);
+        this.animacao.novoSprite(t);
     }
 }

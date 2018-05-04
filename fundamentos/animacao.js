@@ -1,4 +1,5 @@
 // Arquivo: animacao.js
+
 function Animacao(context) {
     this.context = context;
     this.sprites = [];
@@ -8,6 +9,7 @@ function Animacao(context) {
 Animacao.prototype = {
     novoSprite: function(sprite) {
         this.sprites.push(sprite);
+        sprite.animacao = this;
     },
     ligar: function() {
         this.ligado = true;
