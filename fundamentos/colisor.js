@@ -5,6 +5,7 @@ function Colisor() {
 Colisor.prototype = {
     novoSprite: function(sprite) {
         this.sprites.push(sprite);
+        sprite.colisor = this;
     },
     processar: function() {
         for (var i in this.sprites) {

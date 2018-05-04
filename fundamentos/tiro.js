@@ -25,5 +25,16 @@ Tiro.prototype = {
         ctx.fillStyle = this.cor;
         ctx.fillRect(this.x, this.y, this.largura, this.altura);
         ctx.restore();
+    },
+    retangulosColisao: function() {
+        return [{
+            x: this.x,
+            y: this.y,
+            largura: this.largura,
+            altura: this.altura
+        }];
+    },
+    colidiuCom: function(outro) {
+        // ...
     }
 }
