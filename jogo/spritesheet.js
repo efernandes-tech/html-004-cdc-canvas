@@ -1,3 +1,5 @@
+// Arquivo: spritesheet.js
+
 function Spritesheet(context, imagem, linhas, colunas) {
     this.context = context;
     this.imagem = imagem;
@@ -6,6 +8,7 @@ function Spritesheet(context, imagem, linhas, colunas) {
     this.intervalo = 0;
     this.linha = 0;
     this.coluna = 0;
+    this.fimDoCiclo = null;
 }
 
 Spritesheet.prototype = {
@@ -20,11 +23,18 @@ Spritesheet.prototype = {
         if (agora - this.ultimoTempo < this.intervalo) {
             return;
         }
+
         if (this.coluna < this.numColunas - 1) {
             this.coluna++;
         } else {
             this.coluna = 0;
+
+            // Avisar que acabou um ciclo!
+            if (this.fimDoCiclo) {
+                this.fimDoCiclo()
+            }
         }
+
         // Guardar hora da última mudança.
         this.ultimoTempo = agora;
     },
