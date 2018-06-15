@@ -12,6 +12,7 @@
     <script src="tiro.js"></script>
     <script src="spritesheet.js"></script>
     <script src="explosao.js"></script>
+    <script src="painel.js"></script>
     <style>
     #link_jogar {
         /* Inicia oculto. */
@@ -93,6 +94,7 @@
             estrelas = new Fundo(context, imagens.estrelas);
             nuvens = new Fundo(context, imagens.nuvens);
             nave = new Nave(context, teclado, imagens.nave, imagens.explosao);
+            painel = new Painel(context, nave);
 
             // Ligações entre objetos.
             animacao.novoSprite(espaco);
@@ -101,6 +103,8 @@
             animacao.novoSprite(nave);
             colisor.novoSprite(nave);
             animacao.novoProcessamento(colisor);
+            animacao.novoSprite(painel);
+            animacao.novoSprite(nave);
 
             configuracoesIniciais();
         }
@@ -111,12 +115,17 @@
             estrelas.velocidade = 150;
             nuvens.velocidade = 500;
 
-            // Nave.
-            nave.x = canvas.width / 2 - 18;
-            nave.y = canvas.height - 48;
+            // Nave
+            nave.posicionar();
             nave.velocidade = 200;
 
             criacaoInimigos();
+
+            // Game Over
+            nave.acabaramVidas = function() {
+                animacao.desligar();
+                alert('GAME OVER');
+            }
         }
 
         function criacaoInimigos() {
