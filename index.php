@@ -1,4 +1,4 @@
 <?php
 
-redirect('/jogo', 'refresh');
-die();
+redirect('/jogo/jogo-definitivo', 'refresh');
+
