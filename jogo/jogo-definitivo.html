@@ -134,7 +134,7 @@
             // Game Over
             nave.acabaramVidas = function() {
                 animacao.desligar();
-                alert('GAME OVER');
+                gameOver();
             }
         }
 
@@ -243,6 +243,8 @@
         }
 
         function iniciarJogo() {
+            criadorInimigos.ultimoOvni = new Date().getTime();
+
             painel.pontuacao = 0;
 
             // Tiro.
@@ -254,6 +256,52 @@
             document.getElementById('link_jogar').style.display = 'none';
             musicaAcao.play();
             animacao.ligar();
+        }
+
+        function gameOver() {
+            // Tiro.
+            ativarTiro(false);
+
+            // Pausa.
+            teclado.disparou(ENTER, null);
+
+            // Parar a música e rebobinar.
+            musicaAcao.pause();
+            musicaAcao.currentTime = 0.0;
+
+            // Fundo.
+            context.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+
+            // Texto "Game Over".
+            context.save();
+            context.fillStyle = 'white';
+            context.strokeStyle = 'black';
+            context.font = '70px sans-serif';
+            context.fillText("GAME OVER", 40, 200);
+            context.strokeText("GAME OVER", 40, 200);
+            context.restore();
+
+            // Volta o link "Jogar".
+            mostrarLinkJogar();
+
+            // Restaurar as condições da nave.
+            nave.vidasExtras = 3;
+
+            nave.posicionar();
+
+            animacao.novoSprite(nave);
+
+            colisor.novoSprite(nave);
+
+            removerInimigos();
+        }
+
+        function removerInimigos() {
+            for (var i in animacao.sprites) {
+                if (animacao.sprites[i] instanceof Ovni) {
+                    animacao.excluirSprite(animacao.sprites[i]);
+                }
+            }
         }
     </script>
 </body>
