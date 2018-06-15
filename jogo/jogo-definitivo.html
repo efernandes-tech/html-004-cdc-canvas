@@ -79,6 +79,9 @@
         }
 
         function configuracoesIniciais() {
+            // Pausa
+            teclado.disparou(ENTER, pausarJogo);
+
             // Fundos.
             espaco.velocidade = 60;
             estrelas.velocidade = 150;
@@ -90,9 +93,7 @@
             nave.velocidade = 200;
 
             // Tiro.
-            teclado.disparou(ESPACO, function() {
-                nave.atirar();
-            });
+            ativarTiro(true);
 
             animacao.ligar();
 
@@ -100,7 +101,7 @@
         }
 
         function criacaoInimigos() {
-            var criador = {
+            criadorInimigos = {
                 ultimoOvni: new Date().getTime(),
                 processar: function() {
                     var agora = new Date().getTime();
@@ -112,7 +113,7 @@
                 }
             };
 
-            animacao.novoProcessamento(criador);
+            animacao.novoProcessamento(criadorInimigos);
         }
 
         function novoOvni() {
@@ -131,6 +132,36 @@
             animacao.novoSprite(ovni);
 
             colisor.novoSprite(ovni);
+        }
+
+        function pausarJogo() {
+            if (animacao.ligado) {
+                animacao.desligar();
+                ativarTiro(false);
+
+                // Escrever "Pausado"
+                context.save();
+                context.fillStyle = 'white';
+                context.strokeStyle = 'black';
+                context.font = '50px sans-serif';
+                context.fillText("Pausado", 160, 200);
+                context.strokeText("Pausado", 160, 200);
+                context.restore();
+            } else {
+                criadorInimigos.ultimoOvni = new Date().getTime();
+                animacao.ligar();
+                ativarTiro(true);
+            }
+        }
+
+        function ativarTiro(ativar) {
+            if (ativar) {
+                teclado.disparou(ESPACO, function() {
+                    nave.atirar();
+                });
+            } else {
+                teclado.disparou(ESPACO, null);
+            }
         }
     </script>
 </body>
