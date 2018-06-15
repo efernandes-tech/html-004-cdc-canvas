@@ -24,9 +24,11 @@
         // Variáveis principais.
         var imagens, animacao, teclado, colisor, nave, criadorInimigos;
         var totalImagens = 0, carregadas = 0;
+        var musicaAcao;
 
-        // Começa carregando as imagens.
+        // Começa carregando as imagens e musicas.
         carregarImagens();
+        carregarMusicas();
 
         function carregarImagens() {
             // Objeto contendo os nomes das imagens.
@@ -162,6 +164,15 @@
             } else {
                 teclado.disparou(ESPACO, null);
             }
+        }
+
+        function carregarMusicas() {
+            musicaAcao = new Audio();
+            musicaAcao.src = 'snd/musica-acao.mp3';
+            musicaAcao.load();
+            musicaAcao.volume = 0.8;
+            musicaAcao.loop = true;
+            musicaAcao.play();
         }
     </script>
 </body>
