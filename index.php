@@ -1,4 +1,4 @@
 <?php
 
-redirect('/jogo/jogo-definitivo', 'refresh');
-
+header("Location: /jogo/jogo-definitivo.html");
+die();
