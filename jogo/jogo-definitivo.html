@@ -12,10 +12,35 @@
     <script src="tiro.js"></script>
     <script src="spritesheet.js"></script>
     <script src="explosao.js"></script>
+    <style>
+    #link_jogar {
+        /* Inicia oculto. */
+        display: none;
+        /* Cores e fundo. */
+        color: yellow;
+        background: url(img/botao-jogar.png);
+        /* Fonte. */
+        font-size: 20px;
+        font-family: sans-serif;
+        /* Sem sublinhado e com sombra. */
+        text-decoration: none;
+        text-shadow: 2px 2px 5px black;
+        /* Posicionamento. */
+        position: absolute;
+        left: 220px;
+        top: 330px;
+        /* A imagem do botão é 72x72, descontamos os paddings. */
+        width: 52px;
+        height: 26px;
+        padding: 23px 10px;
+    }
+    </style>
 </head>
 <body>
-    <canvas id="canvas_animacao" width="500" height="500">
-    </canvas>
+    <canvas id="canvas_animacao" width="500" height="500"></canvas>
+
+    <a id="link_jogar" href="javascript: iniciarJogo()">Jogar</a>
+
     <script type="text/javascript">
         // Canvas e context.
         var canvas = document.getElementById('canvas_animacao');
@@ -81,9 +106,6 @@
         }
 
         function configuracoesIniciais() {
-            // Pausa
-            teclado.disparou(ENTER, pausarJogo);
-
             // Fundos.
             espaco.velocidade = 60;
             estrelas.velocidade = 150;
@@ -93,11 +115,6 @@
             nave.x = canvas.width / 2 - 18;
             nave.y = canvas.height - 48;
             nave.velocidade = 200;
-
-            // Tiro.
-            ativarTiro(true);
-
-            animacao.ligar();
 
             criacaoInimigos();
         }
@@ -172,7 +189,50 @@
             musicaAcao.load();
             musicaAcao.volume = 0.8;
             musicaAcao.loop = true;
+            // musicaAcao.play();
+        }
+
+        function carregando() {
+            context.save();
+
+            // Fundo
+            context.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+
+            // Texto "Carregando"
+            context.fillStyle = 'white';
+            context.strokeStyle = 'black';
+            context.font = '50px sans-serif';
+            context.fillText("Carregando...", 100, 200);
+            context.strokeText("Carregando...", 100, 200);
+
+            // Barra de loading
+            carregadas++;
+            var tamanhoTotal = 300;
+            var tamanho = carregadas / totalImagens * tamanhoTotal;
+            context.fillStyle = 'yellow';
+            context.fillRect(100, 250, tamanho, 50);
+
+            context.restore();
+            if (carregadas == totalImagens) {
+                iniciarObjetos();
+                mostrarLinkJogar();
+            }
+        }
+
+        function mostrarLinkJogar() {
+            document.getElementById('link_jogar').style.display = 'block';
+        }
+
+        function iniciarJogo() {
+            // Tiro.
+            ativarTiro(true);
+
+            // Pausa
+            teclado.disparou(ENTER, pausarJogo);
+
+            document.getElementById('link_jogar').style.display = 'none';
             musicaAcao.play();
+            animacao.ligar();
         }
     </script>
 </body>
