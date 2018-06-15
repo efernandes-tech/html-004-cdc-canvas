@@ -121,6 +121,16 @@
 
             criacaoInimigos();
 
+            // Pontuação
+            colisor.aoColidir = function(o1, o2) {
+                // Tiro com Ovni.
+                if ( (o1 instanceof Tiro && o2 instanceof Ovni)
+                    || (o1 instanceof Ovni && o2 instanceof Tiro) ) {
+                    // Use o incremento que desejar.
+                    painel.pontuacao += 10;
+                }
+            }
+
             // Game Over
             nave.acabaramVidas = function() {
                 animacao.desligar();
@@ -233,6 +243,8 @@
         }
 
         function iniciarJogo() {
+            painel.pontuacao = 0;
+
             // Tiro.
             ativarTiro(true);
 
