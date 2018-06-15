@@ -35,12 +35,49 @@
         height: 26px;
         padding: 23px 10px;
     }
+    #postar_pontuacao {
+        /* Ocultar o link. */
+        display: none;
+        /* Visual a gosto! */
+        color: yellow;
+        position: absolute;
+        left: 180px;
+        top: 410px;
+    }
     </style>
 </head>
 <body>
+    <script>
+    window.fbAsyncInit = function() {
+    FB.init({
+    appId            : '242642883161552',
+    autoLogAppEvents : true,
+    xfbml            : true,
+    version          : 'v3.0'
+    });
+    };
+
+    (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <canvas id="canvas_animacao" width="500" height="500"></canvas>
 
     <a id="link_jogar" href="javascript: iniciarJogo()">Jogar</a>
+
+    <div id="botao_compartilhar"
+        class="fb-share-button"
+        data-href="https://html-004-cdc-canvas.herokuapp.com/"
+        data-type="button_count"></div>
+
+    <a id="postar_pontuacao" href="javascript: postarPontuacao()">
+        Compartilhar Pontuação
+    </a>
 
     <script type="text/javascript">
         // Canvas e context.
@@ -243,6 +280,8 @@
         }
 
         function iniciarJogo() {
+            document.getElementById('postar_pontuacao').style.display = 'none';
+
             criadorInimigos.ultimoOvni = new Date().getTime();
 
             painel.pontuacao = 0;
@@ -294,6 +333,9 @@
             colisor.novoSprite(nave);
 
             removerInimigos();
+
+            // Link de postar pontuação
+            document.getElementById('postar_pontuacao').style.display = 'block';
         }
 
         function removerInimigos() {
@@ -302,6 +344,24 @@
                     animacao.excluirSprite(animacao.sprites[i]);
                 }
             }
+        }
+
+        function postarPontuacao() {
+            // Aqui obteríamos a pontuação do jogo.
+            var pontuacao = 100000;
+            // API de feed do Facebook.
+            FB.ui({
+                method: 'feed',
+                name: 'Jogo de Nave',
+                caption: 'Jogue e compartilhe com seus amigos!',
+                description: (
+                    'Minha pontuação foi: ' + painel.pontuacao
+                ),
+                link: 'http://sua_hospedagem_aqui'
+            },
+            function(response) {
+
+            });
         }
     </script>
 </body>

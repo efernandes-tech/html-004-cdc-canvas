@@ -1,4 +1,5 @@
-Anotações:
--
+# html-004-cdc-canvas
 
-pg 169
+Anotações:
+- Link:
+    https://html-004-cdc-canvas.herokuapp.com/jogo/jogo-definitivo.html
