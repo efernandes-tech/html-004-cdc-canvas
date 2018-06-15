@@ -77,14 +77,14 @@
 
         function configuracoesIniciais() {
             // Fundos.
-            espaco.velocidade = 3;
-            estrelas.velocidade = 5;
-            nuvens.velocidade = 10;
+            espaco.velocidade = 60;
+            estrelas.velocidade = 150;
+            nuvens.velocidade = 500;
 
             // Nave.
             nave.x = canvas.width / 2 - imagens.nave.width / 2;
             nave.y = canvas.height - imagens.nave.height;
-            nave.velocidade = 5;
+            nave.velocidade = 200;
 
             // Tiro.
             teclado.disparou(ESPACO, function() {
