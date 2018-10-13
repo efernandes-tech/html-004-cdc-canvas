@@ -12,6 +12,7 @@ function Explosao(context, imagem, x, y) {
     this.spritesheet.intervalo = 75;
     this.x = x;
     this.y = y;
+    this.animando = false;
 
     var explosao = this;
 

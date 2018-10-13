@@ -1,10 +1,12 @@
 // arquivo: fundo.js
+
 function Fundo(context, imagem) {
     this.context = context;
     this.imagem = imagem;
     this.velocidade = 0;
     this.posicaoEmenda = 0;
 }
+
 Fundo.prototype = {
     atualizar: function() {
         // Atualizar a posição de emenda.

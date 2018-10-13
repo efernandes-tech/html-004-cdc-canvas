@@ -34,8 +34,6 @@ Animacao.prototype = {
             this.ultimoCiclo = agora;
         }
         this.decorrido = agora - this.ultimoCiclo;
-        // A cada ciclo, limpamos a tela ou desenhamos um fundo.
-        // this.limparTela();
         // Atualizamos o estado dos sprites.
         for (var i in this.sprites) {
             this.sprites[i].atualizar();
@@ -57,10 +55,6 @@ Animacao.prototype = {
         requestAnimationFrame(function() {
             animacao.proximoFrame();
         });
-    },
-    limparTela: function() {
-        var ctx = this.context; // Só para facilitar a escrita ;)
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     },
     novoProcessamento: function(processamento) {
         this.processamentos.push(processamento);

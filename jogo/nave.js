@@ -48,7 +48,7 @@ Nave.prototype = {
         this.spritesheet.desenhar(this.x, this.y);
         this.spritesheet.proximoQuadro();
     },
-    // Não esqueça da vírgula no último método quando criar outro
+    // Não esqueça da vírgula no último método quando criar outro.
     atirar: function() {
         var t = new Tiro(this.context, this);
         this.animacao.novoSprite(t);
@@ -62,13 +62,13 @@ Nave.prototype = {
             {x: this.x+25, y: this.y+19, largura: 9, altura: 13}
         ];
         // Desenhando os retângulos para visualização.
-        var ctx = this.context;
-        for (var i in rets) {
-            ctx.save();
-            ctx.strokeStyle = 'yellow';
-            ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
-            ctx.restore();
-        }
+        // var ctx = this.context;
+        // for (var i in rets) {
+        //     ctx.save();
+        //     ctx.strokeStyle = 'yellow';
+        //     ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
+        //     ctx.restore();
+        // }
         return rets;
     },
     colidiuCom: function(outro) {
@@ -103,7 +103,7 @@ Nave.prototype = {
     },
     posicionar: function() {
         var canvas = this.context.canvas;
-        this.x = canvas.width / 2 - 18; // 36 / 2
+        this.x = canvas.width / 2 - 18; // 36 / 2 - 18
         this.y = canvas.height - 48;
     }
 }

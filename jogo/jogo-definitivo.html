@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Jogo de Nave</title>
-    <script src="animacao.js"></script>
-    <script src="teclado.js"></script>
-    <script src="colisor.js"></script>
-    <script src="fundo.js"></script>
-    <script src="nave.js"></script>
-    <script src="ovni.js"></script>
-    <script src="tiro.js"></script>
-    <script src="spritesheet.js"></script>
-    <script src="explosao.js"></script>
-    <script src="painel.js"></script>
-    <style>
+    <script src="animacao.js" type="text/javascript"></script>
+    <script src="teclado.js" type="text/javascript"></script>
+    <script src="colisor.js" type="text/javascript"></script>
+    <script src="fundo.js" type="text/javascript"></script>
+    <script src="nave.js" type="text/javascript"></script>
+    <script src="ovni.js" type="text/javascript"></script>
+    <script src="tiro.js" type="text/javascript"></script>
+    <script src="spritesheet.js" type="text/javascript"></script>
+    <script src="explosao.js" type="text/javascript"></script>
+    <script src="painel.js" type="text/javascript"></script>
+    <style type="text/css">
     #link_jogar {
         /* Inicia oculto. */
         display: none;
@@ -47,22 +49,22 @@
     </style>
 </head>
 <body>
-    <script>
+    <script type="text/javascript">
     window.fbAsyncInit = function() {
-    FB.init({
-    appId            : '242642883161552',
-    autoLogAppEvents : true,
-    xfbml            : true,
-    version          : 'v3.0'
-    });
+        FB.init({
+            appId            : '242642883161552',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v3.0'
+        });
     };
 
     (function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/pt_BR/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     </script>
 
@@ -70,14 +72,19 @@
 
     <a id="link_jogar" href="javascript: iniciarJogo()">Jogar</a>
 
-    <div id="botao_compartilhar"
-        class="fb-share-button"
-        data-href="https://html-004-cdc-canvas.herokuapp.com/"
-        data-type="button_count"></div>
-
     <a id="postar_pontuacao" href="javascript: postarPontuacao()">
-        Compartilhar Pontuação
+        Compartilhar Pontua&ccedil;&atilde;o
     </a>
+
+    <br>
+
+    <div id="botao_compartilhar" class="fb-share-button" data-href="https://html-004-cdc-canvas.herokuapp.com/" data-type="button_count"></div>
+
+    <p>
+        Setas: movimento <br>
+        Espa&ccedil;o: tiro <br>
+        Enter: pausa
+    </p>
 
     <script type="text/javascript">
         // Canvas e context.
@@ -116,9 +123,30 @@
         }
 
         function carregando() {
+            context.save();
+
+            // Fundo.
+            context.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+
+            // Texto "Carregando"
+            context.fillStyle = 'white';
+            context.strokeStyle = 'black';
+            context.font = '50px sans-serif';
+            context.fillText("Carregando...", 100, 200);
+            context.strokeText("Carregando...", 100, 200);
+
+            // Barra de loading
             carregadas++;
+            var tamanhoTotal = 300;
+            var tamanho = carregadas / totalImagens * tamanhoTotal;
+            context.fillStyle = 'yellow';
+            context.fillRect(100, 250, tamanho, 50);
+
+            context.restore();
+
             if (carregadas == totalImagens) {
                 iniciarObjetos();
+                mostrarLinkJogar();
             }
         }
 
@@ -137,11 +165,10 @@
             animacao.novoSprite(espaco);
             animacao.novoSprite(estrelas);
             animacao.novoSprite(nuvens);
+            animacao.novoSprite(painel);
             animacao.novoSprite(nave);
             colisor.novoSprite(nave);
             animacao.novoProcessamento(colisor);
-            animacao.novoSprite(painel);
-            animacao.novoSprite(nave);
 
             configuracoesIniciais();
         }
@@ -195,8 +222,8 @@
             var imgOvni = imagens.ovni;
             var ovni = new Ovni(context, imgOvni, imagens.explosao);
 
-            // Mínimo: 5; máximo: 20
-            ovni.velocidade = Math.floor( 5 + Math.random() * (20 - 5 + 1) );
+            // Mínimo: 500; máximo: 1000
+            ovni.velocidade = Math.floor( 500 + Math.random() * (1000 - 500 + 1) );
 
             // Mínimo: 0; máximo: largura do canvas - largura do ovni
             ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
@@ -214,7 +241,7 @@
                 animacao.desligar();
                 ativarTiro(false);
 
-                // Escrever "Pausado"
+                // Escrever "Pausado".
                 context.save();
                 context.fillStyle = 'white';
                 context.strokeStyle = 'black';
@@ -245,34 +272,6 @@
             musicaAcao.load();
             musicaAcao.volume = 0.8;
             musicaAcao.loop = true;
-            // musicaAcao.play();
-        }
-
-        function carregando() {
-            context.save();
-
-            // Fundo
-            context.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
-
-            // Texto "Carregando"
-            context.fillStyle = 'white';
-            context.strokeStyle = 'black';
-            context.font = '50px sans-serif';
-            context.fillText("Carregando...", 100, 200);
-            context.strokeText("Carregando...", 100, 200);
-
-            // Barra de loading
-            carregadas++;
-            var tamanhoTotal = 300;
-            var tamanho = carregadas / totalImagens * tamanhoTotal;
-            context.fillStyle = 'yellow';
-            context.fillRect(100, 250, tamanho, 50);
-
-            context.restore();
-            if (carregadas == totalImagens) {
-                iniciarObjetos();
-                mostrarLinkJogar();
-            }
         }
 
         function mostrarLinkJogar() {
@@ -280,19 +279,18 @@
         }
 
         function iniciarJogo() {
-            document.getElementById('postar_pontuacao').style.display = 'none';
-
             criadorInimigos.ultimoOvni = new Date().getTime();
-
-            painel.pontuacao = 0;
 
             // Tiro.
             ativarTiro(true);
 
-            // Pausa
+            // Pausa.
             teclado.disparou(ENTER, pausarJogo);
 
             document.getElementById('link_jogar').style.display = 'none';
+            document.getElementById('postar_pontuacao').style.display = 'none';
+
+            painel.pontuacao = 0;
             musicaAcao.play();
             animacao.ligar();
         }
@@ -332,9 +330,10 @@
 
             colisor.novoSprite(nave);
 
+            // Tirar todos os inimigos da tela.
             removerInimigos();
 
-            // Link de postar pontuação
+            // Link de postar pontuação.
             document.getElementById('postar_pontuacao').style.display = 'block';
         }
 
@@ -347,8 +346,6 @@
         }
 
         function postarPontuacao() {
-            // Aqui obteríamos a pontuação do jogo.
-            var pontuacao = 100000;
             // API de feed do Facebook.
             FB.ui({
                 method: 'feed',
